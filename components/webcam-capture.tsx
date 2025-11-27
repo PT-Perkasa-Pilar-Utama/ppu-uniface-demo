@@ -77,7 +77,7 @@ export function WebcamCapture({ onCapture, buttonText = "Capture from Webcam" }:
                         <Camera className="mr-2 h-4 w-4" />
                         Capture
                     </Button>
-                    <Button variant="outline" onClick={() => setIsOpen(false)} className="cursor-pointer">
+                    <Button variant="destructive" onClick={() => setIsOpen(false)} className="cursor-pointer">
                         Cancel
                     </Button>
                 </div>
