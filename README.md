@@ -1,5 +1,7 @@
 # PPU Uniface Demo
 
+![Demo](image.png)
+
 A comprehensive Next.js web application demonstrating the capabilities of [ppu-uniface](https://github.com/PT-Perkasa-Pilar-Utama/ppu-uniface), a powerful TypeScript library for face detection, recognition, verification, and anti-spoofing.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.0.5-black)
@@ -8,6 +10,9 @@ A comprehensive Next.js web application demonstrating the capabilities of [ppu-u
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 > **⚠️ Deployment Note**: This application uses native Node.js modules (`onnxruntime-node`) and requires a containerized environment. It **cannot** be deployed to Vercel's serverless platform. Use Docker-based platforms like Railway, Render, or Fly.io instead.
+
+> [!WARNING]  
+> First detection might takes time to download the onnx model
 
 ## 🎯 Features
 
