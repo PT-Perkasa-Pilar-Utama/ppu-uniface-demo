@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { faces } from "@/lib/db/schema";
 import { uniface } from "@/lib/uniface";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
     const formData = await req.formData();
@@ -26,12 +26,11 @@ export async function POST(req: NextRequest) {
             const dbEmbedding = new Float32Array(JSON.parse(face.embedding));
             const verification = await uniface.verifyEmbedding(inputEmbedding, dbEmbedding);
 
-            if (verification.verified) {
-                matches.push({
-                    face,
-                    similarity: verification.similarity,
-                });
-            }
+            matches.push({
+                face,
+                similarity: verification.similarity,
+                verified: verification.verified,
+            });
         }
 
         // Sort by similarity (higher is better for cosine similarity usually, but uniface might use distance or similarity)
@@ -39,7 +38,7 @@ export async function POST(req: NextRequest) {
         // Let's assume higher is better.
         matches.sort((a, b) => b.similarity - a.similarity);
 
-        return NextResponse.json(matches);
+        return NextResponse.json(matches.slice(0, 10));
     } catch (error) {
         console.error("Error searching faces:", error);
         return NextResponse.json({ error: "Failed to search faces" }, { status: 500 });
