@@ -175,7 +175,9 @@ export default function SearchPage() {
                                                     <p className="font-mono text-green-600 font-bold text-xl">
                                                         {(match.similarity * 100).toFixed(2)}%
                                                     </p>
-                                                    <p className="text-xs text-muted-foreground">Match</p>
+                                                    <p className={`text-xs ${match.verified ? "text-green-600 font-medium" : "text-amber-600"}`}>
+                                                        {match.verified ? "Verified" : "Low Confidence"}
+                                                    </p>
                                                 </div>
                                             </div>
                                         ))
