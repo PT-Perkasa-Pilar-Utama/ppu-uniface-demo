@@ -7,6 +7,8 @@ A comprehensive Next.js web application demonstrating the capabilities of [ppu-u
 ![Bun](https://img.shields.io/badge/Bun-1.3.1-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
+> **⚠️ Deployment Note**: This application uses native Node.js modules (`onnxruntime-node`) and requires a containerized environment. It **cannot** be deployed to Vercel's serverless platform. Use Docker-based platforms like Railway, Render, or Fly.io instead.
+
 ## 🎯 Features
 
 This demo showcases all major features of ppu-uniface through an intuitive web interface:
@@ -199,7 +201,59 @@ This demo is perfect for:
 - Creating face-based search engines
 - Learning face detection/recognition concepts
 
-## 📚 Learn More
+## � Deployment
+
+### Why Not Vercel?
+
+This application uses `onnxruntime-node`, which requires native binaries (`libonnxruntime.so`) that are not available in Vercel's serverless environment. Additionally, the ONNX models are downloaded and cached on first run, which doesn't work well with ephemeral serverless functions.
+
+### Recommended Platforms
+
+Deploy to any Docker-based platform:
+
+#### Option 1: Railway (Easiest)
+1. Push your code to GitHub
+2. Go to [Railway](https://railway.app/)
+3. Click "New Project" → "Deploy from GitHub repo"
+4. Select your repository
+5. Railway will automatically detect the Dockerfile and deploy
+
+#### Option 2: Render
+1. Push your code to GitHub
+2. Go to [Render](https://render.com/)
+3. Click "New" → "Web Service"
+4. Connect your repository
+5. Render will use the `render.yaml` configuration
+
+#### Option 3: Fly.io
+```bash
+# Install flyctl
+curl -L https://fly.io/install.sh | sh
+
+# Login and launch
+fly auth login
+fly launch
+
+# Deploy
+fly deploy
+```
+
+#### Option 4: Docker Locally
+```bash
+# Build the image
+docker build -t ppu-uniface-demo .
+
+# Run the container
+docker run -p 3000:3000 ppu-uniface-demo
+```
+
+### Important Notes
+
+- **Model Caching**: ONNX models are downloaded on first run and cached. Ensure your deployment platform has persistent storage or the models will be re-downloaded on each cold start.
+- **Memory Requirements**: The application requires at least 512MB RAM for model inference.
+- **Cold Starts**: First request may take 5-10 seconds to download and initialize models.
+
+## �📚 Learn More
 
 - [ppu-uniface Documentation](https://github.com/PT-Perkasa-Pilar-Utama/ppu-uniface)
 - [Next.js Documentation](https://nextjs.org/docs)

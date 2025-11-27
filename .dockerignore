@@ -1,0 +1,10 @@
+node_modules
+.next
+.git
+.gitignore
+*.db
+*.db-shm
+*.db-wal
+.env*.local
+README.md
+.vercel

@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: ppu-uniface-demo
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
