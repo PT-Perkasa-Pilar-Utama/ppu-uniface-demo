@@ -38,6 +38,7 @@ export function SampleSelector({ onSelect, samples = DEFAULT_SAMPLES }: SampleSe
         if (path.includes("kevin")) return "Kevin";
         if (path.includes("magnus")) return "Magnus";
         if (path.includes("tdf")) return "Multiple";
+        if (path.includes("fake")) return "Fake";
         return "Sample";
     };
 

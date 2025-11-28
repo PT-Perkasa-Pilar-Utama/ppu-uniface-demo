@@ -13,7 +13,7 @@
         "drizzle-orm": "^0.44.7",
         "lucide-react": "^0.555.0",
         "next": "16.0.5",
-        "ppu-uniface": "^2.0.0",
+        "ppu-uniface": "^2.0.2",
         "react": "19.2.0",
         "react-dom": "19.2.0",
         "react-webcam": "^7.2.0",
@@ -905,7 +905,7 @@
 
     "ppu-ocv": ["ppu-ocv@1.6.0", "", { "dependencies": { "@napi-rs/canvas": "^0.1.69", "@techstark/opencv-js": "^4.10.0-release.1" } }, "sha512-4GtGkgeZHuCvdH9oYsvflVIaqLtaUYKcFKv+/rJdMIO8fKO7fV/Fs8mohwzT68j9wWtpVBd/p+qjDlSa7Lof6A=="],
 
-    "ppu-uniface": ["ppu-uniface@2.0.0", "", { "dependencies": { "onnxruntime-node": "^1.23.2", "ppu-ocv": "^1.6.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-aQ8egMfbBFSucdsWhDjkcNvu2hThuKshbQWRBhJq1Mabx0USlnE/v97QhplDZZdtBRl9eonnJgyXvLYjudCUnA=="],
+    "ppu-uniface": ["ppu-uniface@2.0.2", "", { "dependencies": { "onnxruntime-node": "^1.23.2", "ppu-ocv": "^1.6.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-QSs8YGqpssSB01ymUgdK+RmKyMe79cK99Yz7KS8ndgGFKkFb+SPiM1thM2VDv4nFhcQp2zszfp1DsrmGHUl78Q=="],
 
     "prebuild-install": ["prebuild-install@7.1.3", "", { "dependencies": { "detect-libc": "^2.0.0", "expand-template": "^2.0.3", "github-from-package": "0.0.0", "minimist": "^1.2.3", "mkdirp-classic": "^0.5.3", "napi-build-utils": "^2.0.0", "node-abi": "^3.3.0", "pump": "^3.0.0", "rc": "^1.2.7", "simple-get": "^4.0.0", "tar-fs": "^2.0.0", "tunnel-agent": "^0.6.0" }, "bin": { "prebuild-install": "bin.js" } }, "sha512-8Mf2cbV7x1cXPUILADGI3wuhfqWvtiLA1iclTDbFRZkgRQS0NqsPZphna9V+HyTEadheuPmjaJMsbzKQFOzLug=="],
 

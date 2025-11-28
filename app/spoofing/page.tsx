@@ -165,17 +165,20 @@ export default function SpoofingPage() {
                                             )}
                                         </div>
                                     </div>
+                                </div>
+
+                                <div className="grid grid-cols-3 gap-3">
                                     <div className="p-3 bg-muted rounded-lg">
                                         <p className="text-xs text-muted-foreground mb-1">Score</p>
-                                        <p className="text-lg font-bold">{result.score.toFixed(4)}</p>
+                                        <p className="text-lg font-bold">{(result.score * 100).toFixed(1)}%</p>
                                     </div>
                                     <div className="p-3 bg-muted rounded-lg">
-                                        <p className="text-xs text-muted-foreground mb-1">Confidence</p>
-                                        <p className="text-lg font-bold">
-                                            {result.real
-                                                ? (result.score * 100).toFixed(1)
-                                                : ((1 - result.score) * 100).toFixed(1)}%
-                                        </p>
+                                        <p className="text-xs text-muted-foreground mb-1">Realness</p>
+                                        <p className="text-lg font-bold text-green-600">{(result.realness * 100).toFixed(1)}%</p>
+                                    </div>
+                                    <div className="p-3 bg-muted rounded-lg">
+                                        <p className="text-xs text-muted-foreground mb-1">Fakeness</p>
+                                        <p className="text-lg font-bold text-red-600">{(result.fakeness * 100).toFixed(1)}%</p>
                                     </div>
                                 </div>
 

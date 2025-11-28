@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ScanFace, UserRoundSearch, Users, UserCheck, Search } from "lucide-react";
+import { ScanFace, UserRoundSearch, Users, UserCheck, Search, ShieldCheck } from "lucide-react";
 
 const features = [
     {
@@ -15,6 +15,12 @@ const features = [
         description: "Generate and view face embeddings.",
         href: "/recognize",
         icon: UserRoundSearch,
+    },
+    {
+        title: "Spoofing Detection",
+        description: "Detect if a face image is real or spoofed.",
+        href: "/spoofing",
+        icon: ShieldCheck,
     },
     {
         title: "Face Verification",

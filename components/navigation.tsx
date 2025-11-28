@@ -11,9 +11,9 @@ const navItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/detect", label: "Detection", icon: ScanFace },
     { href: "/recognize", label: "Recognition", icon: UserRoundSearch },
+    { href: "/spoofing", label: "Spoofing", icon: ShieldCheck },
     { href: "/verify", label: "Verification", icon: UserCheck },
     { href: "/attendance", label: "Attendance", icon: Users },
-    { href: "/spoofing", label: "Spoofing", icon: ShieldCheck },
     { href: "/search", label: "Search", icon: Search },
 ];
 
