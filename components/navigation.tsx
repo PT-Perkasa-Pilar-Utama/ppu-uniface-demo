@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Home, ScanFace, UserRoundSearch, UserCheck, Users, Search, Menu, X } from "lucide-react";
+import { Home, ScanFace, UserRoundSearch, UserCheck, Users, Search, Menu, X, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -13,6 +13,7 @@ const navItems = [
     { href: "/recognize", label: "Recognition", icon: UserRoundSearch },
     { href: "/verify", label: "Verification", icon: UserCheck },
     { href: "/attendance", label: "Attendance", icon: Users },
+    { href: "/spoofing", label: "Spoofing", icon: ShieldCheck },
     { href: "/search", label: "Search", icon: Search },
 ];
 

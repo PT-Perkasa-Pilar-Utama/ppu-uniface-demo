@@ -95,7 +95,7 @@ export default function RecognizePage() {
                         <CardTitle>Result</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <div className="relative border rounded-lg overflow-hidden bg-muted min-h-[300px] flex items-center justify-center">
+                        <div className="relative border rounded-lg overflow-hidden bg-muted h-[300px] flex items-center justify-center">
                             {image ? (
                                 <img src={image} alt="Input" className="max-w-full h-auto max-h-[300px]" />
                             ) : (

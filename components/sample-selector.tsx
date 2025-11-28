@@ -15,6 +15,9 @@ const DEFAULT_SAMPLES = [
     "/sample/image-kevin2.jpg",
     "/sample/image-magnus1.png",
     "/sample/image-magnus2.png",
+    "/sample/image-tdf-many.png",
+    "/sample/image-fake1.jpg",
+    "/sample/image-fake2.jpg",
 ];
 
 export function SampleSelector({ onSelect, samples = DEFAULT_SAMPLES }: SampleSelectorProps) {

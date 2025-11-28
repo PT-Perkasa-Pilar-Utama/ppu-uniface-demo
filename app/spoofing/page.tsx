@@ -6,9 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileDropZone } from "@/components/file-drop-zone";
 import { SampleSelector } from "@/components/sample-selector";
 import { CopyButton } from "@/components/copy-button";
-import { Loader2, AlertCircle, CheckCircle, XCircle, Clock, Check } from "lucide-react";
+import { Loader2, AlertCircle, CheckCircle, XCircle, Clock, ShieldCheck, ShieldAlert } from "lucide-react";
 
-export default function DetectPage() {
+export default function SpoofingPage() {
     const [image, setImage] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<any>(null);
@@ -24,7 +24,7 @@ export default function DetectPage() {
         setResponseTime(null);
     };
 
-    const detectFace = async () => {
+    const analyzeSpoofing = async () => {
         if (!image) return;
 
         setLoading(true);
@@ -36,7 +36,7 @@ export default function DetectPage() {
             const formData = new FormData();
             formData.append("file", blob);
 
-            const res = await fetch("/api/detect", {
+            const res = await fetch("/api/spoofing", {
                 method: "POST",
                 body: formData,
             });
@@ -46,14 +46,14 @@ export default function DetectPage() {
 
             const data = await res.json();
 
-            if (data.error || !data.box) {
-                setError(data.error || "No face detected in the image");
+            if (data.error) {
+                setError(data.error);
                 setResult(null);
             } else {
                 setResult(data);
             }
         } catch (err) {
-            setError("Detection failed. Please try again.");
+            setError("Analysis failed. Please try again.");
             console.error(err);
         } finally {
             setLoading(false);
@@ -74,27 +74,15 @@ export default function DetectPage() {
             canvas.height = img.height;
             ctx.drawImage(img, 0, 0);
 
-            if (result && result.box) {
-                const { x, y, width, height } = result.box;
-                ctx.strokeStyle = "#00FF00";
-                ctx.lineWidth = 4;
-                ctx.strokeRect(x, y, width, height);
-
-                if (result.landmarks) {
-                    ctx.fillStyle = "#FF0000";
-                    result.landmarks.forEach((point: number[]) => {
-                        ctx.beginPath();
-                        ctx.arc(point[0], point[1], 5, 0, 2 * Math.PI);
-                        ctx.fill();
-                    });
-                }
-            }
+            // Note: Spoofing result from API currently doesn't return the box directly
+            // If we wanted to draw the box, we'd need to update the API to return it.
+            // For now, we just display the image.
         };
     }, [image, result]);
 
     return (
         <div className="container mx-auto py-10">
-            <h1 className="text-3xl font-bold mb-6 text-center">Face Detection</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center">Spoofing Detection</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card>
@@ -122,12 +110,12 @@ export default function DetectPage() {
                         <SampleSelector onSelect={handleFileSelect} />
 
                         <Button
-                            onClick={detectFace}
+                            onClick={analyzeSpoofing}
                             disabled={!image || loading}
                             className="w-full cursor-pointer bg-primary hover:bg-primary/90"
                         >
                             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                            Detect Face
+                            Analyze Spoofing
                         </Button>
                     </CardContent>
                 </Card>
@@ -161,25 +149,33 @@ export default function DetectPage() {
                         {result && (
                             <div className="space-y-3">
                                 <div className="grid grid-cols-2 gap-3">
-                                    <div className="p-3 bg-muted rounded-lg">
-                                        <p className="text-xs text-muted-foreground mb-1">Confidence</p>
-                                        <p className="text-lg font-bold">{(result.confidence * 100).toFixed(2)}%</p>
-                                    </div>
-                                    <div className="p-3 bg-muted rounded-lg">
-                                        <p className="text-xs text-muted-foreground mb-1">Multiple Faces</p>
-                                        <div className="flex items-center gap-1">
-                                            {result.multipleFaces ? (
+                                    <div className="p-3 bg-muted rounded-lg col-span-2">
+                                        <p className="text-xs text-muted-foreground mb-1">Status</p>
+                                        <div className="flex items-center gap-2">
+                                            {result.real ? (
                                                 <>
-                                                    <XCircle className="h-5 w-5 text-orange-500" />
-                                                    <span className="text-lg font-bold">Yes</span>
+                                                    <ShieldCheck className="h-6 w-6 text-green-500" />
+                                                    <span className="text-xl font-bold text-green-600">Real Face</span>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <CheckCircle className="h-5 w-5 text-green-500" />
-                                                    <span className="text-lg font-bold">No</span>
+                                                    <ShieldAlert className="h-6 w-6 text-red-500" />
+                                                    <span className="text-xl font-bold text-red-600">Spoof / Fake</span>
                                                 </>
                                             )}
                                         </div>
+                                    </div>
+                                    <div className="p-3 bg-muted rounded-lg">
+                                        <p className="text-xs text-muted-foreground mb-1">Score</p>
+                                        <p className="text-lg font-bold">{result.score.toFixed(4)}</p>
+                                    </div>
+                                    <div className="p-3 bg-muted rounded-lg">
+                                        <p className="text-xs text-muted-foreground mb-1">Confidence</p>
+                                        <p className="text-lg font-bold">
+                                            {result.real
+                                                ? (result.score * 100).toFixed(1)
+                                                : ((1 - result.score) * 100).toFixed(1)}%
+                                        </p>
                                     </div>
                                 </div>
 
