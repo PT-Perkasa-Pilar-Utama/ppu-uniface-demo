@@ -236,6 +236,57 @@ app.openapi(
   }
 );
 
+// /detect/spoofing detection then spoofing analysis
+app.openapi(
+  createRoute({
+    method: "post",
+    path: "/api/detect",
+    middleware: [apiKeyAuth] as any,
+    security: [{ ApiKeyAuth: [] }],
+    request: {
+      body: {
+        content: {
+          "multipart/form-data": {
+            schema: z.object({
+              file: z.instanceof(File).openapi({ type: "string", format: "binary" }),
+            }),
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: z.object({
+              box: z.object({ x: z.number(), y: z.number(), width: z.number(), height: z.number() }),
+              landmarks: z.array(z.array(z.number())),
+              confidence: z.number(),
+              spoofing: z.boolean(),
+            }),
+          },
+        },
+        description: "Detection results",
+      },
+      400: { content: { "application/json": { schema: ErrorSchema } }, description: "Bad Request" },
+      500: { content: { "application/json": { schema: ErrorSchema } }, description: "Error" },
+    },
+  }),
+  async (c) => {
+    try {
+      const body = await c.req.parseBody();
+      const file = body["file"];
+      if (!(file instanceof File)) return c.json({ error: "File required" }, 400);
+
+      const arrayBuffer = await file.arrayBuffer();
+      const result = await uniface.detect(arrayBuffer);
+      return c.json(result);
+    } catch (e) {
+      return c.json({ error: "Detection failed" }, 500);
+    }
+  }
+);
+
 // 2. Recognize Route (Get Embedding)
 app.openapi(
   createRoute({
@@ -783,13 +834,14 @@ export default app;
 | Endpoint | Method | Description | Auth |
 | :--- | :--- | :--- | :--- |
 | `/api/detect` | `POST` | Detect faces, landmarks, and attributes | API Key |
+| `/api/detect/spoof` | `POST` | Detect faces and spoofing, landmarks, and attributes | API Key |
 | `/api/recognize` | `POST` | Generate face embedding from image | API Key |
 | `/api/verify` | `POST` | Verify two face images | API Key |
 | `/api/verify/embedding` | `POST` | Verify two face embeddings | API Key |
 | `/api/search` | `POST` | Search for matching faces in DB (Image) | API Key |
 | `/api/search/embedding` | `POST` | Search for matching faces in DB (Embedding) | API Key |
 | `/api/kyc` | `POST` | Verify selfie against ID card (e-KYC) | API Key |
-| `/api/spoof` | `POST` | **[Reserved]** Check for face spoofing | API Key |
+| `/api/spoof` | `POST` | Check for face spoofing (assuming already detect the facial area) | API Key |
 | `/api/enroll` | `POST` | Add a new face to the database | API Key |
 | `/admin` | `GET` | Admin Dashboard for API Keys | Basic Auth |
 | `/ui` | `GET` | Swagger UI Documentation | Public |
