@@ -1,4 +1,4 @@
-# PPU Uniface Demo
+# PPU Uniface Demo [SERVER-SIDE]
 
 ![Demo](image.png)
 
